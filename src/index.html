@@ -6,9 +6,21 @@
     <title>Todo-list</title>
 </head>
 <body>
+    <div id="overlay"></div>
+    <form class="form">
+        <label for="title">Title</label>
+        <input type="text" id="title"></input>
+        <label for="description">Description</label>
+        <input type="text" id="description"></input>
+        <label for="date">Due Date</label>
+        <input type="date" id="date"></input>
+        <button id="back" type="button">Back</button>
+        <button id="submit" type="submit">Add</button>
+    </form>
     <div class="container">
         <div class="nav"> <img id="list-icon">Todo List</div>
         <div class="legend">
+            <button id="add">+</button>
         </div>
         <div class="todo">
         </div>
