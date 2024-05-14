@@ -41,9 +41,11 @@ body {
 }
 .todo div {
     display: grid;
-    grid-template-columns: 1fr 2fr 4fr 1fr;
+    grid-template-columns: 1fr 2fr 4fr 1fr 0.5fr;
     height: 50px;
-    width: 100%;
+    width: 80%;
+    border: 1px solid black;
+    margin-bottom: 10px;
 }
 
 input[type="checkbox"] {
@@ -75,4 +77,9 @@ input[type="checkbox"] {
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999; 
+}
+
+.bin-icon {
+    height: 50%;
+    cursor: pointer;
 }

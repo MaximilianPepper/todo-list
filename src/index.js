@@ -1,7 +1,9 @@
 import './styles.css';
-import list from './icons/list.png'
+import list from './icons/list.png';
+import bin from './icons/bin.png';
 const icon1 = document.getElementById("list-icon");
 icon1.src = list;
+
 
 class Todo {
     static list = [];
@@ -10,10 +12,11 @@ class Todo {
         this.description = description;
         this.dueDate = dueDate;
         this.checklist = false;
+        this.project = "";
         Todo.list.push(this);
         Populate.makeTodo();
     }
-    
+    // TODO add checkbox <s> text
 }
 
 class Projects {
@@ -30,9 +33,22 @@ class Populate {
         for (let i = 0; i < Todo.list.length; i++){
             const itemDiv =  document.createElement("div");
             itemDiv.id = `todo-item-${i}`;
-            itemDiv.innerHTML = `<input type="checkbox"><p>${Todo.list[i].title}</p><p>${Todo.list[i].description}</p><p>${Todo.list[i].dueDate}</p>`
-            todo.appendChild(itemDiv);
-        }     
+            itemDiv.innerHTML = `<input type="checkbox"><p>${Todo.list[i].title}</p><p>${Todo.list[i].description}</p><p>${Todo.list[i].dueDate}</p><img class="bin-icon">`;
+            todo.appendChild(itemDiv);  
+        }
+        const icon2 = document.querySelectorAll(".bin-icon");
+        if (icon2){ 
+            icon2.forEach((icon2,index)=>{
+                icon2.src = bin;
+                icon2.addEventListener("click",()=>{
+                    Todo.list.splice(index,1);
+                    this.makeTodo();
+                })
+            });
+            } 
+
+
+ 
     }
 }
 // btn logic
@@ -58,6 +74,10 @@ form.addEventListener("submit", (e)=>{
         const newItem = new Todo(title.value,description.value,date.value);
     }
 })
+// TODO fix form to close on submit and clear inputs
+
+// Add project logic and a dropdown for each project.
+
 
 
 
