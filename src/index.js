@@ -7,21 +7,27 @@ icon1.src = list;
 
 class Todo {
     static list = [];
-    constructor(title, description, dueDate){
+
+    constructor(title, description, dueDate,project){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.checklist = false;
-        this.project = "";
+        this.project = project
         Todo.list.push(this);
         Populate.makeTodo();
     }
     // TODO add checkbox <s> text
+
 }
 
-class Projects {
+class Project {
+    static list = [];
+
     constructor(title){
         this.title = title;
+        Project.list.push(this);
+        Populate.makeProject();
 
     }
 }
@@ -50,6 +56,28 @@ class Populate {
 
  
     }
+
+    static makeProject(){
+        const projects = document.querySelector("#projects");
+        const projectSelect = document.querySelector("#project-select");
+        projects.innerHTML = "";
+        projectSelect.innerHTML = "";
+        const chooseProject = document.createElement("option");
+        chooseProject.textContent = "select a project";
+        chooseProject.disabled = true;  // its not disabling correctly,check for this when form is sumbit
+        chooseProject.defaultSelected = true;
+        projectSelect.appendChild(chooseProject);
+        for (let i = 0; i < Project.list.length;i++){
+            const item = document.createElement("li");
+            item.innerText = Project.list[i].title;
+            projects.appendChild(item);
+
+            const item1 = document.createElement("option");
+            item1.innerText = Project.list[i].title;
+            projectSelect.appendChild(item1);
+        }
+        
+    }
 }
 // btn logic
 const btnForm = document.getElementById("add");
@@ -70,9 +98,19 @@ form.addEventListener("submit", (e)=>{
     const title = document.getElementById("title");
     const description = document.getElementById("description");
     const date = document.getElementById("date");
+    const projectSelect = document.querySelector("#project-select");
     if(title.value.length){
-        const newItem = new Todo(title.value,description.value,date.value);
+        const newItem = new Todo(title.value,description.value,date.value,projectSelect.value);
+        console.log(Todo.list)
+
     }
+})
+const projectForm = document.querySelector(".project");
+projectForm.addEventListener("submit",(e)=>{
+    e.preventDefault();
+    const projectName = document.querySelector("#new-project");
+    const newProject = new Project(projectName.value);
+
 })
 // TODO fix form to close on submit and clear inputs
 
@@ -84,5 +122,6 @@ form.addEventListener("submit", (e)=>{
 
 
 const test = new Todo("test","a test todo","date");
-console.log(test);
-console.log(Todo.list);
+const project1 = new Project("fitness");
+const project2 = new Project("work"); 
+
