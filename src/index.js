@@ -7,18 +7,18 @@ icon1.src = list;
 
 class Todo {
     static list = [];
-
+    static id = 0;
     constructor(title, description, dueDate,project){
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.checklist = false;
-        this.project = project
+        this.project = project;
+        this.id = Todo.id;
+        Todo.id++;
         Todo.list.push(this);
         Populate.makeTodo();
     }
-    // TODO add checkbox <s> text
-
 }
 
 class Project {
@@ -39,7 +39,11 @@ class Populate {
         for (let i = 0; i < Todo.list.length; i++){
             const itemDiv =  document.createElement("div");
             itemDiv.id = `todo-item-${i}`;
-            itemDiv.innerHTML = `<input type="checkbox"><p>${Todo.list[i].title}</p><p>${Todo.list[i].description}</p><p>${Todo.list[i].dueDate}</p><img class="bin-icon">`;
+            if(Todo.list[i].checklist === false)itemDiv.innerHTML = `<input class="check-todo" type="checkbox"><p>${Todo.list[i].title}</p><p>${Todo.list[i].description}</p><p>${Todo.list[i].dueDate}</p><img class="bin-icon">`;
+            else {
+                itemDiv.innerHTML = `<input class="check-todo" type="checkbox" checked><p><s>${Todo.list[i].title}</s></p><p><s>${Todo.list[i].description}</s></p><p>${Todo.list[i].dueDate}</p><img class="bin-icon">`;
+                itemDiv.classList.add("red-border");
+            }
             todo.appendChild(itemDiv);  
         }
         const icon2 = document.querySelectorAll(".bin-icon");
@@ -52,6 +56,16 @@ class Populate {
                 })
             });
             } 
+        const listCheck = document.querySelectorAll(".check-todo");
+        if (listCheck){
+            listCheck.forEach((box,index)=>{
+                box.addEventListener("change",()=>{
+                    if (box.checked) Todo.list[index].checklist = true;
+                    else Todo.list[index].checklist = false;
+                    this.makeTodo();
+                })
+            })
+        }
 
 
  
@@ -63,10 +77,12 @@ class Populate {
         projects.innerHTML = "";
         projectSelect.innerHTML = "";
         const chooseProject = document.createElement("option");
-        chooseProject.textContent = "select a project";
-        chooseProject.disabled = true;  // its not disabling correctly,check for this when form is sumbit
+        chooseProject.textContent = "none";
         chooseProject.defaultSelected = true;
         projectSelect.appendChild(chooseProject);
+        const item1 = document.createElement("li");
+        item1.innerText = "none";
+
         for (let i = 0; i < Project.list.length;i++){
             const item = document.createElement("li");
             item.innerText = Project.list[i].title;
@@ -101,7 +117,9 @@ form.addEventListener("submit", (e)=>{
     const projectSelect = document.querySelector("#project-select");
     if(title.value.length){
         const newItem = new Todo(title.value,description.value,date.value,projectSelect.value);
-        console.log(Todo.list)
+        console.log(Todo.list); // temp - remove when done
+        form.style.display ="none";
+        overlay.style.display = "none";
 
     }
 })
@@ -109,19 +127,15 @@ const projectForm = document.querySelector(".project");
 projectForm.addEventListener("submit",(e)=>{
     e.preventDefault();
     const projectName = document.querySelector("#new-project");
-    const newProject = new Project(projectName.value);
+    if (projectName.value.length){
+        const newProject = new Project(projectName.value);
+    }
 
 })
-// TODO fix form to close on submit and clear inputs
-
-// Add project logic and a dropdown for each project.
 
 
 
-
-
-
-const test = new Todo("test","a test todo","date");
+const test = new Todo("test","a test todo","10/24/1995");
 const project1 = new Project("fitness");
 const project2 = new Project("work"); 
 

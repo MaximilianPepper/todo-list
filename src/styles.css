@@ -44,7 +44,7 @@ body {
     grid-template-columns: 1fr 2fr 4fr 1fr 0.5fr;
     height: 50px;
     width: 80%;
-    border: 1px solid black;
+    border: 2px solid black;
     margin-bottom: 10px;
 }
 
@@ -82,4 +82,8 @@ input[type="checkbox"] {
 .bin-icon {
     height: 50%;
     cursor: pointer;
+}
+
+.red-border {
+    border-left: 2px solid red !important ;
 }
