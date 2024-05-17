@@ -76,21 +76,21 @@ class Populate {
         const projectSelect = document.querySelector("#project-select");
         projects.innerHTML = "";
         projectSelect.innerHTML = "";
+        const item = document.createElement("li");
+        projects.appendChild(item);
+
         const chooseProject = document.createElement("option");
         chooseProject.textContent = "none";
         chooseProject.defaultSelected = true;
-        projectSelect.appendChild(chooseProject);
-        const item1 = document.createElement("li");
-        item1.innerText = "none";
+        item.appendChild(chooseProject);
+        
 
         for (let i = 0; i < Project.list.length;i++){
-            const item = document.createElement("li");
-            item.innerText = Project.list[i].title;
-            projects.appendChild(item);
+            
 
             const item1 = document.createElement("option");
             item1.innerText = Project.list[i].title;
-            projectSelect.appendChild(item1);
+            item.appendChild(item1);
         }
         
     }
