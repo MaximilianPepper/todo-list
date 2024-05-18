@@ -72,26 +72,62 @@ class Populate {
     }
 
     static makeProject(){
-        const projects = document.querySelector("#projects");
+        const projects = document.querySelector("#projects"); // this is a UL
         const projectSelect = document.querySelector("#project-select");
         projects.innerHTML = "";
         projectSelect.innerHTML = "";
-        const item = document.createElement("li");
-        projects.appendChild(item);
-
-        const chooseProject = document.createElement("option");
-        chooseProject.textContent = "none";
-        chooseProject.defaultSelected = true;
-        item.appendChild(chooseProject);
+        const defItem = document.createElement("li");
+        const defButton = document.createElement("button");
+        const defProject = document.createElement("option");
+        defButton.textContent = "All";
+        defItem.appendChild(defButton);
+        defProject.textContent = "none";
+        defProject.defaultSelected = true;
+        projects.appendChild(defItem);
+        projectSelect.appendChild(defProject);
         
 
         for (let i = 0; i < Project.list.length;i++){
-            
-
-            const item1 = document.createElement("option");
-            item1.innerText = Project.list[i].title;
-            item.appendChild(item1);
+            // generating options
+            const selectItem = document.createElement("option");
+            selectItem.textContent = Project.list[i].title;
+            selectItem.value = Project.list[i].title;
+            projectSelect.appendChild(selectItem);
+            // generating buttons
+            const listItem = document.createElement("li");
+            const button = document.createElement("button");
+            button.textContent = Project.list[i].title;
+            button.dataset.index = i; // data attribute to store index
+            listItem.appendChild(button);
+            projects.appendChild(listItem);
         }
+
+        projects.addEventListener("click", (event) => {
+            if (event.target.tagName === "BUTTON") {
+                const index = event.target.dataset.index;
+                const selectedProject = Project.list[index];
+                if (selectedProject.title === "none"){
+                    // show all
+                    // to fix this is no a real project
+                }
+                else {
+                    for (let i = 0; i < Todo.list.length; i++) {
+                        if (selectedProject.title === Todo.list[i].project){
+                             const divID = document.getElementById(`todo-item-${i}`);
+                             divID.style.display = "";  
+                        } 
+                        else {
+                            const divID = document.getElementById(`todo-item-${i}`);
+                            divID.style.display = "none";
+                        }
+                        
+                    }
+                }
+                
+            }
+        });
+
+
         
     }
 }
@@ -118,8 +154,13 @@ form.addEventListener("submit", (e)=>{
     if(title.value.length){
         const newItem = new Todo(title.value,description.value,date.value,projectSelect.value);
         console.log(Todo.list); // temp - remove when done
+        // clean form
+        title.value = "";
+        description.value = "";
+        date.value = "";
         form.style.display ="none";
         overlay.style.display = "none";
+        
 
     }
 })
