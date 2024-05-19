@@ -67,6 +67,9 @@ class Populate {
             })
         }
 
+        // local storage
+        saveArrayToLocalStorage();
+        
 
  
     }
@@ -80,6 +83,7 @@ class Populate {
         const defButton = document.createElement("button");
         const defProject = document.createElement("option");
         defButton.textContent = "All";
+        defButton.id = "show-all";
         defItem.appendChild(defButton);
         defProject.textContent = "none";
         defProject.defaultSelected = true;
@@ -106,9 +110,8 @@ class Populate {
             if (event.target.tagName === "BUTTON") {
                 const index = event.target.dataset.index;
                 const selectedProject = Project.list[index];
-                if (selectedProject.title === "none"){
-                    // show all
-                    // to fix this is no a real project
+                if (event.target.id === "show-all"){
+                    this.makeTodo();
                 }
                 else {
                     for (let i = 0; i < Todo.list.length; i++) {
@@ -126,9 +129,7 @@ class Populate {
                 
             }
         });
-
-
-        
+        saveArrayToLocalStorage();   
     }
 }
 // btn logic
@@ -170,13 +171,43 @@ projectForm.addEventListener("submit",(e)=>{
     const projectName = document.querySelector("#new-project");
     if (projectName.value.length){
         const newProject = new Project(projectName.value);
+        projectName.value = "";
     }
 
 })
-
-
-
-const test = new Todo("test","a test todo","10/24/1995");
-const project1 = new Project("fitness");
-const project2 = new Project("work"); 
+// storage func
+function loadArrayFromLocalStorage() {
+    const arrayFromStorage = localStorage.getItem('todo');
+    if (arrayFromStorage) {
+        Todo.list = JSON.parse(arrayFromStorage);
+    } else {
+        Todo.list = [];
+        
+        
+    }
+    const arrayFromStorage1 = localStorage.getItem('projects');
+    if (arrayFromStorage1) {
+        Project.list = JSON.parse(arrayFromStorage1);
+    } else {
+        Project.list = [];
+        
+        
+    }
+}
+function saveArrayToLocalStorage() {
+    localStorage.setItem('todo', JSON.stringify(Todo.list));
+    localStorage.setItem('projects', JSON.stringify(Project.list));
+}
+loadArrayFromLocalStorage();
+Populate.makeTodo();
+Populate.makeProject();
+if (Todo.list.length === 0){
+    const test = new Todo("Test","You have no todos so this todo appears!","10/24/1995");
+    Populate.makeTodo();
+}
+if (Project.list.length === 0){
+    const project1 = new Project("fitness");
+    const project2 = new Project("work");
+    Populate.makeProject();
+}
 
