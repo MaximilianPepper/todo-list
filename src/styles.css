@@ -161,3 +161,9 @@ input[type="checkbox"] {
   cursor: pointer;
   border: 1px solid green;
 }
+
+.project,
+.project p,
+.legend p {
+  padding: 10px;
+}
