@@ -97,7 +97,15 @@ class Populate {
       const button = document.createElement("button");
       button.textContent = Project.list[i].title;
       button.dataset.index = i; // data attribute to store index
+      // del button for project
+      const delProject = document.createElement("button");
+      delProject.textContent = "Del";
+      delProject.addEventListener("click", () => {
+        Project.list.splice(i, 1);
+        this.makeProject();
+      });
       listItem.appendChild(button);
+      listItem.appendChild(delProject);
       projects.appendChild(listItem);
     }
 
