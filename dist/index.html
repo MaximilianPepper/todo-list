@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo-list</title>
+</head>
+<body>
+    <div id="overlay"></div>
+    <form class="form">
+        <label for="title">Title</label>
+        <input type="text" id="title" required></input>
+        <label for="description">Description</label>
+        <input type="text" id="description"></input>
+        <label for="date">Due Date</label>
+        <input type="date" id="date"></input>
+        <select id="project-select">
+        </select>
+        <button id="back" type="button">Back</button>
+        <button id="submit" type="submit">Add</button>
+    </form>
+    <div class="container">
+        <div class="nav"> <img id="list-icon">Todo List</div>
+        <div class="legend">
+            <p>Display TODO</p>
+            <ul id="projects">
+
+            </ul>
+            <p>Add project</p>
+            <form class="project"><input id="new-project"></input><button type="submit">Add</button></form>
+            <div class="new-todo"><button id="add">+</button></div>
+        </div>
+        <div class="todo">
+        </div>
+        <div class="footer">
+        </div>
+    </div>
+<script defer src="bundle.js"></script></body>
+</html> 
